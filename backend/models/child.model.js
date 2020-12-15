@@ -7,7 +7,7 @@ const childSchema = new Schema({
     paidAmount: { type: Number, required: true }
 },
 {
-    timestamps: true
+    timestamps: false
 });
 
 const Child = mongoose.model('Child', childSchema);

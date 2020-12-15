@@ -8,7 +8,7 @@ const parentSchema = new Schema({
     totalAmount: { type: Number, required: true }
 },
 {
-    timestamps: true
+    timestamps: false
 });
 
 const Parent = mongoose.model('Parent', parentSchema);
