@@ -6,9 +6,7 @@ const childSchema = new Schema({
     parentId: { type: Number, required: true },
     paidAmount: { type: Number, required: true }
 },
-{
-    timestamps: false
-});
+{ collection : 'child' });
 
 const Child = mongoose.model('Child', childSchema);
 

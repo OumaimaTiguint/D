@@ -7,9 +7,7 @@ const parentSchema = new Schema({
     receiver: { type: String, required: true },
     totalAmount: { type: Number, required: true }
 },
-{
-    timestamps: false
-});
+{ collection : 'parent' });
 
 const Parent = mongoose.model('Parent', parentSchema);
 

@@ -20,6 +20,7 @@ export default class ParentElements extends Component {
     axios.get('http://localhost:5000/parent/')
       .then(response => {
         this.setState({ elements: response.data })
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
