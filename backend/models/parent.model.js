@@ -5,7 +5,8 @@ const parentSchema = new Schema({
     id: { type: Number, required: true },
     sender: { type: String, required: true },
     receiver: { type: String, required: true },
-    totalAmount: { type: Number, required: true }
+    totalAmount: { type: Number, required: true },
+    paidAmount: { type: Number, required: true }
 },
 { collection : 'parent' });
 
