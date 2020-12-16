@@ -3,10 +3,10 @@ import axios from 'axios';
 
 const Parent = props => (
     <tr>
-      <td>{props.parent.id}</td>
-      <td>{props.parent.sender}</td>
-      <td>{props.parent.receiver}</td>
-      <td>{props.parent.totalAmount}</td>
+      <td>{props.element.id}</td>
+      <td>{props.element.sender}</td>
+      <td>{props.element.receiver}</td>
+      <td>{props.element.totalAmount}</td>
     </tr>
 )
 
@@ -19,8 +19,7 @@ export default class ParentElements extends Component {
   componentDidMount() {
     axios.get('http://localhost:5000/parent/')
       .then(response => {
-        this.setState({ elements: response.data })
-        console.log(response.data)
+        this.setState({ elements: response.data[0].data })
       })
       .catch((error) => {
         console.log(error);
@@ -46,7 +45,7 @@ export default class ParentElements extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.parentElements() }
+          { this.parentElements() }
           </tbody>
         </table>
       </div>
