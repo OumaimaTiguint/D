@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ChildElements from './child.component'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Parent = props => (
-  <tr>
-    <th scope="row">{props.element.id}</th>
-    <td>{props.element.sender}</td>
-    <td>{props.element.receiver}</td>
-    <td>{props.element.totalAmount}</td>
-    <td>{props.element.paidAmount/2}</td>
-  </tr>
+const Child = props => (
+    <tr>
+      <th scope="row">{props.element.parentId}</th>
+      <td>{props.element.sender}</td>
+      <td>{props.element.receiver}</td>
+      <td>{props.element.totalAmount}</td>
+      <td>{props.element.paidAmount}</td>
+    </tr>
 )
 
-export default class ParentElements extends Component {
+export default class ChildElements extends Component {
   constructor(props) {
     super(props);
       this.state = {
@@ -41,40 +40,37 @@ export default class ParentElements extends Component {
       })
   }
 
-  parentElements() {
-    return this.state.elements_parent.map(p => {
-      this.state.elements_child.map(c => {
+  childElements() {
+    return this.state.elements_child.map(c => {
+      this.state.elements_parent.map(p => {
         if(c.parentId === p.id) {
-          if(p.paidAmount !== 0) {
-            p.paidAmount = p.paidAmount + c.paidAmount
-          } else {
-            p.paidAmount = c.paidAmount
-          }
+          c.sender = p.sender;
+          c.receiver = p.receiver;
+          c.totalAmount = p.totalAmount;
         }
-        return p.paidAmount;
+        return c;
       })
-      return <Parent element={p} key={p.id}/>;
+      return <Child element={c} key={c.id}/>;
     })
   }
 
   render() {
     return (
-      <div className="Container">
-        <table className="table table-hover table-dark">
+      <div className="container">
+        <table className="table table-dark">
           <thead>
             <tr>
               <th scope="col">Id</th>
               <th scope="col">Sender</th>
               <th scope="col">Receiver</th>
               <th scope="col">Total Amount</th>
-              <th scope="col">Total Paid Amount</th>
+              <th scope="col">Paid Amount</th>
             </tr>
           </thead>
           <tbody>
-          { this.parentElements()}
+          { this.childElements()}
           </tbody>
         </table>
-        <ChildElements />
       </div>
     )
   }
