@@ -7,7 +7,7 @@ const Parent = props => (
       <td>{props.element.sender}</td>
       <td>{props.element.receiver}</td>
       <td>{props.element.totalAmount}</td>
-      <td>{props.element.paidAmount}</td>
+      <td>{props.element.paidAmount/2}</td>
     </tr>
 )
 
@@ -44,11 +44,12 @@ export default class ParentElements extends Component {
       this.state.elements_child.map(c => {
         if(c.parentId === p.id) {
           if(p.paidAmount !== 0) {
-            p.paidAmount = Math.floor(p.paidAmount + c.paidAmount)/2
+            p.paidAmount = p.paidAmount + c.paidAmount
           } else {
             p.paidAmount = c.paidAmount
           }
         }
+        return p.paidAmount;
       })
       return <Parent element={p} key={p.id}/>;
     })
@@ -64,7 +65,7 @@ export default class ParentElements extends Component {
               <th>Sender</th>
               <th>Receiver</th>
               <th>Total Amount</th>
-              <th>Paid Amount</th>
+              <th>Total Paid Amount</th>
             </tr>
           </thead>
           <tbody>
