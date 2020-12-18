@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import ChildElements from './child.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+export let parentId;
 
 const Parent = props => (
   <tr>
@@ -10,7 +12,7 @@ const Parent = props => (
     <td>{props.element.sender}</td>
     <td>{props.element.receiver}</td>
     <td>{props.element.totalAmount}</td>
-    <td>
+    <td onClick={()=> {parentId = props.element.id}}>
       <Link to={"/child/"+ props.element.id}>{props.element.paidAmount/2}</Link>
     </td>
   </tr>
@@ -37,7 +39,6 @@ export default class ParentElements extends Component {
     axios.get('http://localhost:5000/child/')
       .then(response => {
         this.setState({ elements_child: response.data[0].data })
-        console.log(response.data[0].data)
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +63,7 @@ export default class ParentElements extends Component {
 
   render() {
     return (
-      <div className="Container">
+      <div className="container">
         <table className="table table-hover table-dark">
           <thead>
             <tr>

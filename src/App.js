@@ -8,7 +8,7 @@ function App() {
         <Router>
             <div className="container">
                 <Route path="/" exact component={ParentElements}></Route>
-                <Route path="/parent/:id" exact component={ChildElements}></Route>
+                <Route path="/child/:id" exact component={ChildElements}></Route>
             </div>
         </Router>
     );

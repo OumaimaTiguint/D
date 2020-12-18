@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {parentId} from './parent.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Child = props => (
     <tr>
-      <th scope="row">{props.element.parentId}</th>
+      <th scope="row">{props.element.id}</th>
       <td>{props.element.sender}</td>
       <td>{props.element.receiver}</td>
       <td>{props.element.totalAmount}</td>
@@ -17,7 +18,8 @@ export default class ChildElements extends Component {
     super(props);
       this.state = {
         elements_parent: [],
-        elements_child: []
+        elements_child: [],
+        selected_children: []
       }
   }
 
@@ -29,29 +31,23 @@ export default class ChildElements extends Component {
       .catch((error) => {
         console.log(error);
       })
-    
-      axios.get('http://localhost:5000/child/')
+
+    axios.get('http://localhost:5000/child/')
       .then(response => {
-        this.setState({ elements_child: response.data[0].data })
-        console.log(response.data[0].data)
+        response.data[0].data.map(c => {
+          if(c.parentId === parentId) {
+            this.setState({selected_children: this.state.selected_children.concat(c)})
+          }
+          return;
+        })
       })
-      .catch((error) => {
+      .catch(function (error) {
         console.log(error);
       })
   }
 
-  displayChildren() {
-    if(this.state.parentId !== undefined) {
-      this.state.elements_child.map(c => {
-        if(c.parentId === this.state.parentId) {
-          this.setState({children: this.state.children.concat(c)})
-        }
-      })
-    }
-  }
-
   childElements = () => {
-    return this.state.elements_child.map(c => {
+    return this.state.selected_children.map(c => {
       this.state.elements_parent.map(p => {
         if(c.parentId === p.id) {
           c.sender = p.sender;
