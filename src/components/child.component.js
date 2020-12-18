@@ -38,7 +38,7 @@ export default class ChildElements extends Component {
           if(c.parentId === parentId) {
             this.setState({selected_children: this.state.selected_children.concat(c)})
           }
-          return;
+          return c;
         })
       })
       .catch(function (error) {
