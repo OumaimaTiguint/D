@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ChildElements from './child.component'
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import ChildElements from './child.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Parent = props => (
@@ -9,7 +10,9 @@ const Parent = props => (
     <td>{props.element.sender}</td>
     <td>{props.element.receiver}</td>
     <td>{props.element.totalAmount}</td>
-    <td>{props.element.paidAmount/2}</td>
+    <td>
+      <Link to={"/child/"+ props.element.id}>{props.element.paidAmount/2}</Link>
+    </td>
   </tr>
 )
 
@@ -74,7 +77,11 @@ export default class ParentElements extends Component {
           { this.parentElements()}
           </tbody>
         </table>
-        <ChildElements />
+        <Router>
+          <Switch>
+            <Route path="/:id" children={<ChildElements />} />
+          </Switch>
+        </Router>
       </div>
     )
   }

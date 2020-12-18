@@ -18,7 +18,7 @@ export default class ChildElements extends Component {
       this.state = {
         elements_parent: [],
         elements_child: []
-      };
+      }
   }
 
   componentDidMount() {
@@ -29,8 +29,8 @@ export default class ChildElements extends Component {
       .catch((error) => {
         console.log(error);
       })
-
-    axios.get('http://localhost:5000/child/')
+    
+      axios.get('http://localhost:5000/child/')
       .then(response => {
         this.setState({ elements_child: response.data[0].data })
         console.log(response.data[0].data)
@@ -40,7 +40,17 @@ export default class ChildElements extends Component {
       })
   }
 
-  childElements() {
+  displayChildren() {
+    if(this.state.parentId !== undefined) {
+      this.state.elements_child.map(c => {
+        if(c.parentId === this.state.parentId) {
+          this.setState({children: this.state.children.concat(c)})
+        }
+      })
+    }
+  }
+
+  childElements = () => {
     return this.state.elements_child.map(c => {
       this.state.elements_parent.map(p => {
         if(c.parentId === p.id) {

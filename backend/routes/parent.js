@@ -7,10 +7,4 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
-router.route('/:id').get((req, res) => {
-    Parent.findById(req.params.id)
-        .then(e => res.json(e))
-        .catch(err=> res.status(400).json('Error: ' + err))
-});
-
 module.exports = router;
